@@ -31,7 +31,7 @@ const createMealDisplayCards = data => {
     const meals = data.meals;
     let elementString = "";
     meals.forEach(data => {
-        elementString += `<div class="food-item" onclick="showMealDetails(${data.idMeal})">
+        elementString += `<div class="food-item" onclick="displayMealDetails(${data.idMeal})">
             <div class="thumbnail">
                 <img src="${data.strMealThumb}"/>
             </div>
@@ -43,35 +43,38 @@ const createMealDisplayCards = data => {
     return elementString;
 }
 
-// Fetch meal details by id and show details information about the selected food
-const showMealDetails = id => {
+// Display meal details
+const displayMealDetails = id => {
     const url = `${baseUrl}lookup.php?i=${id}`;
     fetch(encodeURI(url))
-        .then(data=>data.json())
-        .then(data=>{
-            const item = data.meals[0];
-            let ingredients = "";
-            let measurement = "";
-            for(let i = 1; i <= 3; i++){
-                ingredients += `<li><i class="material-icons">check_box</i> ${item["strIngredient"+i]}</li>`;
-                measurement += `<li><i class="material-icons">check_box</i> ${item["strMeasure"+i]}</li>`;
-            }
-            detailsArea.innerHTML = `<section id="modal">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <div class="food-details">
-                    <button id="modal-btn" onclick="hideMealDetails()">X</button>
-                    <img src="${item.strMealThumb}" />
-                    <div class="details">
-                      <h1>${item.strMeal}</h1>
-                      <h4>Ingredients</h4>
-                      <ul>${ingredients+measurement}</ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>`;
-        });
+        .then(data => data.json())
+        .then(data => detailsArea.innerHTML = createMealDetailElement(data));
+}
+
+// Create html element for holding meal details
+const createMealDetailElement = data => {
+    const item = data.meals[0];
+    let ingredients = "";
+    let measurement = "";
+    for(let i = 1; i <= 3; i++){
+        ingredients += `<li><i class="material-icons">check_box</i> ${item["strIngredient"+i]}</li>`;
+        measurement += `<li><i class="material-icons">check_box</i> ${item["strMeasure"+i]}</li>`;
+    }
+    return `<section id="modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="food-details">
+            <button id="modal-btn" onclick="hideMealDetails()">X</button>
+            <img src="${item.strMealThumb}" />
+            <div class="details">
+              <h1>${item.strMeal}</h1>
+              <h4>Ingredients</h4>
+              <ul>${ingredients+measurement}</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
 }
 
 // Show not found message if search meal not exists
