@@ -48,11 +48,11 @@ const displayMealDetails = id => {
     const url = `${baseUrl}lookup.php?i=${id}`;
     fetch(encodeURI(url))
         .then(data => data.json())
-        .then(data => detailsArea.innerHTML = createMealDetailElement(data));
+        .then(data => detailsArea.innerHTML = createMealDetailsElement(data));
 }
 
 // Create html element for holding meal details
-const createMealDetailElement = data => {
+const createMealDetailsElement = data => {
     const item = data.meals[0];
     let ingredients = "";
     let measurement = "";
