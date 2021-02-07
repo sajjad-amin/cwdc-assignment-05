@@ -21,7 +21,7 @@ const searchFoodByName = keyword =>{
 }
 const displayFood = data => {
     if (data.meals == null) {
-        showNotFoundMessage()
+        showNotFoundMessage();
     } else {
         displayArea.innerHTML = createFoodCard(data)
     }
@@ -34,18 +34,18 @@ const showNotFoundMessage = () => {
 }
 const createFoodCard = data => {
     let meals = data.meals;
-    let str = "";
-    for(let i = 0; i < meals.length; i++){
-        str += `<div class="food-item" onclick="showFoodDetails(${meals[i].idMeal})">
-            <div class="thumbnail">
-                <img src="${meals[i].strMealThumb}"/>
-            </div>
-            <div class="food-name">
-                <h3>${meals[i].strMeal}</h3>
-            </div>
-        </div>`;
-    }
-    return str;
+    let elementString = "";
+    meals.forEach(data => {
+            elementString += `<div class="food-item" onclick="showFoodDetails(${data.idMeal})">
+                <div class="thumbnail">
+                    <img src="${data.strMealThumb}"/>
+                </div>
+                <div class="food-name">
+                    <h3>${data.strMeal}</h3>
+                </div>
+            </div>`;
+    });
+    return elementString;
 }
 const showFoodDetails = id => {
     let url = `${baseUrl}lookup.php?i=${id}`;
