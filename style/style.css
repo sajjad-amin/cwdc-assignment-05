@@ -133,6 +133,7 @@ nav {
 }
 .details h1 {
   font-weight: bolder;
+  font-size: 1.5em;
 }
 .details ul {
   list-style: none;

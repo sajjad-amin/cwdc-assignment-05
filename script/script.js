@@ -24,10 +24,10 @@ const searchMealsByKeyword = keyword =>{
 }
 
 // Display meals according to search result
-const displayMeals = data => data.meals != null ? displayArea.innerHTML = createMealDisplayCard(data) : showNotFoundMessage();
+const displayMeals = data => data.meals != null ? displayArea.innerHTML = createMealDisplayCards(data) : showNotFoundMessage();
 
 // Create html element for holding each meal item's name and thumbnail
-const createMealDisplayCard = data => {
+const createMealDisplayCards = data => {
     const meals = data.meals;
     let elementString = "";
     meals.forEach(data => {
